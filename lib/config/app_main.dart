@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/core/bloc/app/app_cubit.dart';
 import 'package:flutter_clean_architecture/features/todo/presentation/bloc/todo_bloc.dart';
-import 'package:flutter_clean_architecture/features/todo/presentation/screens/todo_screen.dart';
+import 'package:flutter_clean_architecture/features/todo/presentation/screens/todos_screen.dart';
 
 import 'app_theme.dart';
 import 'custom_scroll_behavior.dart';
@@ -33,7 +33,7 @@ class AppMain extends StatelessWidget {
               darkTheme: AppTheme.dark,
               theme: AppTheme.light,
               themeMode: state.themeMode,
-              home: const TodoScreen());
+              home: const TodosScreen());
         },
       ),
     );

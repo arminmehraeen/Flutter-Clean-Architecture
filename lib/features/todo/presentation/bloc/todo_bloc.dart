@@ -11,12 +11,13 @@ import '../../../../core/resources/data_state.dart';
 part 'todo_event.dart';
 part 'todo_state.dart';
 part 'todos_status.dart';
+part 'todo_status.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   final TodoUseCase todoUseCase;
 
-  TodoBloc(this.todoUseCase) : super(TodoState(todosStatus: TodosLoading())) {
+  TodoBloc(this.todoUseCase) : super(TodoState(todosStatus: TodosLoading(),todoStatus: TodoLoading())) {
 
     on<LoadTodos>((event, emit) async {
       emit(state.copyWith(todosStatus: TodosLoading())) ;
@@ -31,8 +32,17 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       }
     });
 
-    on<LoadTodo>((event, emit) {
+    on<LoadTodo>((event, emit) async {
+      emit(state.copyWith(todoStatus: TodoLoading())) ;
 
+      DataState dataState  = await todoUseCase.getTodo(event.todoNumebr) ;
+      if(dataState is DataSuccess) {
+        emit(state.copyWith(todoStatus: TodoCompleted(todos: dataState.data))) ;
+      }
+
+      if(dataState is DataFailed) {
+        emit(state.copyWith(todoStatus: TodoError(message: dataState.error!))) ;
+      }
     });
   }
 }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture/features/todo/domain/entities/todo_entity.dart';
 import 'package:flutter_clean_architecture/features/todo/presentation/bloc/todo_bloc.dart';
 
-import '../../domain/entities/todo_entity.dart';
-
 class TodoScreen extends StatefulWidget {
-  const TodoScreen({Key? key}) : super(key: key);
-
+  const TodoScreen(this.todoNumber, {Key? key}) : super(key: key);
+  final int todoNumber ;
   @override
   State<TodoScreen> createState() => _TodoScreenState();
 }
@@ -15,43 +14,40 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   void initState() {
-    context.read<TodoBloc>().add(LoadTodos()) ;
+    context.read<TodoBloc>().add(LoadTodo(widget.todoNumber)) ;
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {
-            context.read<TodoBloc>().add(LoadTodos()) ;
+            context.read<TodoBloc>().add(LoadTodo(widget.todoNumber)) ;
           }, icon: const Icon(Icons.refresh))
         ],
         title: const Text("Todos"),
       ),
       body: BlocConsumer<TodoBloc,TodoState>(builder: (context, state) {
 
-        TodosStatus status = state.todosStatus ;
+        TodoStatus status = state.todoStatus ;
 
-        if(status is TodosLoading) {
+        if(status is TodoLoading) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if(status is TodosCompleted) {
-          return ListView.builder(
-            itemCount: status.todos.length,
-            itemBuilder: (context, index) {
-              TodoEntity todoEntity = status.todos[index];
-            return ListTile(
+        if(status is TodoCompleted) {
+          TodoEntity todoEntity = status.todos;
+          return Card(
+            child: ListTile(
               leading: Text(todoEntity.id.toString()),
               title: Text(todoEntity.title),
               subtitle: Text(todoEntity.userId.toString()),
-            );
-          },);
+            ),
+          );
         }
 
-        if(status is TodosError) {
+        if(status is TodoError) {
           return Center(child: Text(status.message),);
         }
 
