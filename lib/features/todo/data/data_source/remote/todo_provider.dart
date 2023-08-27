@@ -1,26 +1,15 @@
-import 'package:dio/dio.dart';
-import '../../../../../core/exception/check_exception.dart';
+import '../../../../../core/services/api_service.dart';
 
 class TodoProvider {
 
-  final Dio dio ;
-  TodoProvider(this.dio) ;
+  final ApiService apiService ;
+  TodoProvider(this.apiService) ;
 
-  todosRequest() async {
-    try {
-      return await dio.get("https://jsonplaceholder.typicode.com/todos/");
-    } on DioError catch (e) {
-      return CheckExceptions.response(e.response);
-    }
-  }
+  todosRequest() async =>
+      await apiService.get(url: "https://jsonplaceholder.typicode.com/todos/");
 
-  todoRequest(int todoNumber) async {
-    try {
-      return await dio.get("https://jsonplaceholder.typicode.com/todos/$todoNumber");
-    } on DioError catch (e) {
-      return CheckExceptions.response(e.response);
-    }
-  }
+  todoRequest(int todoNumber) async =>
+      await apiService.get(url: "https://jsonplaceholder.typicode.com/todos/$todoNumber");
 
 
 }
