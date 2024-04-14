@@ -1,21 +1,37 @@
 part of 'todo_bloc.dart';
 
-class TodoState extends Equatable {
-  final TodosStatus todosStatus;
-  final TodoStatus todoStatus;
+class TodoState {
+
+  final ActionStatus load ;
+  final ActionStatus insert ;
+  final ActionStatus update ;
+  final ActionStatus delete ;
 
   const TodoState({
-    required this.todosStatus,
-    required this.todoStatus,
+    required this.load,
+    required this.insert,
+    required this.update,
+    required this.delete,
   });
 
-  TodoState copyWith({TodosStatus? todosStatus,TodoStatus? todoStatus}) {
+  static TodoState init() => TodoState(load: WaitState(), insert: WaitState(), update: WaitState(), delete: WaitState()) ;
+
+  TodoState copyWith({
+    ActionStatus? load,
+    ActionStatus? insert,
+    ActionStatus? update,
+    ActionStatus? delete,
+  }) {
     return TodoState(
-        todosStatus: todosStatus ?? this.todosStatus,
-        todoStatus: todoStatus ?? this.todoStatus,
+      load: load ?? this.load,
+      insert: insert ?? this.insert,
+      update: update ?? this.update,
+      delete: delete ?? this.delete,
     );
   }
 
   @override
-  List<Object?> get props => [todosStatus,todoStatus];
+  String toString() {
+    return 'TodoState{load: $load, insert: $insert, update: $update, delete: $delete}';
+  }
 }

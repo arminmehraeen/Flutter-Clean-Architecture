@@ -1,26 +1,48 @@
-import '../../data/model/todo_model.dart';
-
 class TodoEntity {
 
-  final int id ;
-  final int userId ;
+  final String id ;
   final String title ;
-  final bool completed ;
+  final String description ;
+  final bool status ;
 
   const TodoEntity({
     required this.id,
-    required this.userId,
     required this.title,
-    required this.completed,
+    required this.description,
+    required this.status,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'status': status,
+    };
+  }
 
-  factory TodoEntity.fromModel(TodoModel model) {
+
+
+  factory TodoEntity.fromMap(Map<String, dynamic> map) {
     return TodoEntity(
-      id: model.id,
-      userId: model.userId,
-      title: model.title,
-      completed: model.completed,
+      id: map['id'] as String,
+      title: map['title'] as String,
+      description: map['description'] as String,
+      status: map['status'] as bool,
+    );
+  }
+
+  TodoEntity copyWith({
+    String? id,
+    String? title,
+    String? description,
+    bool? status,
+  }) {
+    return TodoEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      status: status ?? this.status,
     );
   }
 }

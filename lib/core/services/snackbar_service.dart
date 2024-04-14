@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SnackBarService {
@@ -25,6 +24,7 @@ class SnackBarService {
             Text(message,style: const TextStyle(fontFamily: 'Yekan')),
           ],
         ),
+        duration: const Duration(seconds: 1),
         backgroundColor: color));
   }
 

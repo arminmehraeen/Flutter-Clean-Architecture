@@ -1,28 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_clean_architecture/core/bloc/app/app_cubit.dart';
+import 'package:flutter_clean_architecture/core/bloc/theme/theme_cubit.dart';
 import 'package:flutter_clean_architecture/core/services/api_service.dart';
-import 'package:flutter_clean_architecture/features/todo/todo_locator.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../core/services/sharedpreferences_service.dart';
 import '../core/services/storage_service.dart';
+import '../features/todo/todo_locator.dart';
 
 GetIt locator = GetIt.instance;
 
 setup() async {
 
-  locator.registerSingleton<AppCubit>(AppCubit());
-
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  locator.registerSingleton<SharedPreferences>(sharedPreferences);
+  locator.registerSingleton<StorageService>(StorageService(sharedPreferences));
+
+  locator.registerSingleton<ThemeCubit>(ThemeCubit(storageService: locator()));
 
   locator.registerSingleton<Dio>(Dio());
   locator.registerSingleton<ApiService>(ApiService(locator()));
 
-  locator.registerSingleton<StorageService>(StorageService(locator()));
-  locator.registerSingleton<SharedPreferencesService>(SharedPreferencesService(locator()));
-
-  TodoLocator(locator);
+  TodoLocator(locator) ;
 
 }

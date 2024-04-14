@@ -1,38 +1,34 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../config/app_locale.dart';
+import '../utils/constants.dart';
+
 class StorageService {
-  final SharedPreferences sharedPreferences;
-  StorageService(this.sharedPreferences);
 
-  static const String _introKey = "intro";
-  static const String _passwordKey = "password";
-  static const String _passwordStatusKey = "passwordStatus";
+  final SharedPreferences prefs;
+  StorageService(this.prefs);
 
-  Future writePassword(String password) async {
-    await sharedPreferences.setString(_passwordKey, password);
+  Future<void> saveThemeMode({required ThemeMode themeMode}) async {
+    bool store = themeMode == ThemeMode.dark ? true : false;
+    await prefs.setBool(Keys.themeMode, store);
   }
 
-  Future removePassword() async {
-    await sharedPreferences.remove(_passwordKey);
+  Future<void> saveLocale({required Locale locale}) async {
+    bool store = locale == AppLocale.persian ? true : false;
+    await prefs.setBool(Keys.locale, store);
   }
 
-  Future writePasswordStatus(bool status) async {
-    await sharedPreferences.setBool(_passwordStatusKey, status);
+  ThemeMode loadThemeMode() {
+    bool isDarkMode = prefs.getBool(Keys.themeMode) ?? false ;
+    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
-  Future<bool> readPasswordStatus() async {
-    return sharedPreferences.getBool(_passwordStatusKey) ?? false ;
+  Locale loadLocale() {
+    bool isPersian = prefs.getBool(Keys.locale) ?? true;
+    return isPersian ? AppLocale.persian : AppLocale.english;
   }
 
-  Future<String?> readPassword() async {
-    return sharedPreferences.getString(_passwordKey);
-  }
-
-  Future writeIntro() async {
-    await sharedPreferences.setBool(_introKey, false);
-  }
-
-  Future<bool> readIntro() async {
-    return sharedPreferences.getBool(_introKey) ?? true;
-  }
 }
+
+

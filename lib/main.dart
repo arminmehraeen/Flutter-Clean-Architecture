@@ -9,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  /// init locator
   await setup();
 
   runApp(
@@ -17,6 +18,6 @@ void main() async {
         path: AppLocale.translationsPath,
         fallbackLocale: AppLocale.fallbackLocale,
         saveLocale: true,
-        child: const AppMain()),
+        child: const AppMain())
   );
 }

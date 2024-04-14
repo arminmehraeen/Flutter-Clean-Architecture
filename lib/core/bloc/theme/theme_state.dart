@@ -1,19 +1,19 @@
-part of 'app_cubit.dart';
+part of 'theme_cubit.dart';
 
-class AppState {
+class ThemeState {
   final ThemeMode themeMode;
   final Locale locale;
   final bool isRefreshApp;
 
-  const AppState(
+  const ThemeState(
       {required this.themeMode, required this.locale, this.isRefreshApp = false});
 
-  AppState copyWith({
+  ThemeState copyWith({
     ThemeMode? newThemeMode,
     Locale? newLocale,
     bool? newIsRefreshApp,
   }) {
-    return AppState(
+    return ThemeState(
       themeMode: newThemeMode ?? themeMode,
       locale: newLocale ?? locale,
       isRefreshApp: newIsRefreshApp ?? isRefreshApp,
