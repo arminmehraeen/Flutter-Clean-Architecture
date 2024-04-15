@@ -1,7 +1,5 @@
 ## Flutter Clean Architecture Template
 
-**Description:**
-
 The Flutter Clean Architecture Template is a meticulously crafted project designed to provide a solid foundation for building scalable and maintainable Flutter applications. Embracing the principles of clean architecture, this template offers a structured approach to development, ensuring separation of concerns and easy extensibility.
 
 **Key Features:**
