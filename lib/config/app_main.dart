@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture/core/bloc/theme/theme_cubit.dart';
+import 'package:flutter_clean_architecture/features/category/presentation/bloc/category_bloc.dart';
 import 'package:flutter_clean_architecture/features/todo/presentation/bloc/todo_bloc.dart';
 
 import '../features/todo/presentation/screens/todo_screen.dart';
@@ -17,7 +18,8 @@ class AppMain extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => locator<ThemeCubit>()),
-        BlocProvider(create: (_) => locator<TodoBloc>())
+        BlocProvider(create: (_) => locator<TodoBloc>()),
+        BlocProvider(create: (_) => locator<CategoryBloc>())
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {

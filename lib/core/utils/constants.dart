@@ -5,6 +5,7 @@ class Keys {
   static const String locale = "Locale" ;
 
   static const String todos = "Todos" ;
+  static const String category = "Category" ;
 }
 
 

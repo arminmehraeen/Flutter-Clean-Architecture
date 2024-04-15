@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_clean_architecture/core/resources/data_state.dart';
 import 'package:flutter_clean_architecture/features/todo/domain/entities/todo_entity.dart';
-import 'package:flutter_clean_architecture/features/todo/presentation/bloc/action_status.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../core/model/action_status.dart';
 import '../../domain/use_cases/todo_usecase.dart';
 
 part 'todo_event.dart';
@@ -31,7 +31,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
     on<InsertTodo>((event, emit)  async {
 
-      DataState<bool> response = await todoUseCase.insert(event.title,event.description) ;
+
+      DataState<bool> response = await todoUseCase.insert(TodoEntity.newObject(title: event.title, description: event.description,category: event.category)) ;
 
       if(response is DataSuccess) {
         emit(state.copyWith(insert: SuccessState(data: "کار با موفقیت اضافه شد"))) ;
@@ -45,7 +46,25 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
     on<UpdateTodo>((event, emit)  async {
 
-      DataState<bool> response = await todoUseCase.update(event.title,event.description,event.todoEntity) ;
+      DataState<bool> response = await todoUseCase.update(event.todoEntity.copyWith(
+        description: event.description,
+        title: event.title,
+        category: event.category
+      )) ;
+
+      if(response is DataSuccess) {
+        emit(state.copyWith(update: SuccessState(data: "کار با موفقیت ویرایش شد"))) ;
+      }
+
+      if(response is DataFailed) {
+        emit(state.copyWith(update: ErrorState(message: "مشکل در ویرایش کردن کار"))) ;
+      }
+
+    });
+
+    on<UpdateStatusTodo>((event, emit)  async {
+
+      DataState<bool> response = await todoUseCase.update(event.todoEntity) ;
 
       if(response is DataSuccess) {
         emit(state.copyWith(update: SuccessState(data: "کار با موفقیت ویرایش شد"))) ;

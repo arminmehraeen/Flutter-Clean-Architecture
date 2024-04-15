@@ -25,10 +25,10 @@ class TodoRepositoryImpl extends TodoRepository {
   }
 
   @override
-  Future<DataState<bool>> insert(String title, String description) async {
+  Future<DataState<bool>> insert(TodoEntity entity) async {
     try {
       List<String> stringTodos = local.read();
-      List<TodoEntity> todos = stringTodos.map((e) => TodoEntity.fromMap(json.decode(e))).toList()..add(TodoEntity(id: DateTime.now().toString(), title: title, description: description, status: false)) ;
+      List<TodoEntity> todos = stringTodos.map((e) => TodoEntity.fromMap(json.decode(e))).toList()..add(entity) ;
       List<String> temp = todos.map((e) => json.encode(e.toMap())).toList();
       return DataSuccess(data: await local.write(temp));
     }catch(e) {
@@ -37,13 +37,10 @@ class TodoRepositoryImpl extends TodoRepository {
   }
 
   @override
-  Future<DataState<bool>> update(String title, String description,TodoEntity entity) async {
+  Future<DataState<bool>> update(TodoEntity entity) async {
     try {
       List<String> stringTodos = local.read();
-      List<TodoEntity> todos = stringTodos.map((e) => TodoEntity.fromMap(json.decode(e))).toList().map((e) => e.id == entity.id ? e.copyWith(
-        description: description,
-        title: title
-      ) : e).toList() ;
+      List<TodoEntity> todos = stringTodos.map((e) => TodoEntity.fromMap(json.decode(e))).toList().map((e) => e.id == entity.id ? entity : e).toList() ;
       List<String> temp = todos.map((e) => json.encode(e.toMap())).toList();
       return DataSuccess(data: await local.write(temp));
     }catch(e) {

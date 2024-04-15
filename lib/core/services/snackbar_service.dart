@@ -31,13 +31,13 @@ class SnackBarService {
 }
 
 class SuccessSnackBar extends SnackBarService {
-  SuccessSnackBar({required super.message, required super.context, super.icon}):super(color: Colors.green,title: "Success");
+  SuccessSnackBar({required super.message, required super.context}):super(color: Colors.green,title: "Success",icon: Icons.done);
 }
 
 class ErrorSnackBar extends SnackBarService {
-  ErrorSnackBar({required super.message, required super.context, super.icon}):super(color: Colors.redAccent,title: "Error");
+  ErrorSnackBar({required super.message, required super.context}):super(color: Colors.redAccent,title: "Error",icon: Icons.close);
 }
 
 class WarningSnackBar extends SnackBarService {
-  WarningSnackBar({required super.message, required super.context, super.icon}):super(color: Colors.blue,title: "Warning");
+  WarningSnackBar({required super.message, required super.context}):super(color: Colors.blue,title: "Warning",icon: Icons.info_outline);
 }

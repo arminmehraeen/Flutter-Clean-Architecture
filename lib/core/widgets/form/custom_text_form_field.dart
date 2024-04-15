@@ -14,6 +14,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       maxLines: widget.maxLine,
       validator: (value) {
         if(value == "") {
@@ -23,10 +24,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       },
       controller: widget.controller,
       decoration:  InputDecoration(
-
+      errorStyle: const TextStyle(color: Colors.red,fontSize: 14),
       suffixText: widget.suffixText,
         label: Text(widget.label),
-        border: const OutlineInputBorder(),
+        focusedErrorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
       ),
     );
   }

@@ -10,9 +10,9 @@ class TodoUseCase  {
 
   Future<DataState<List<TodoEntity>>> index() async => await _todoRepository.index() ;
 
-  Future<DataState<bool>> insert(String title,String description) async => await _todoRepository.insert(title, description) ;
+  Future<DataState<bool>> insert(TodoEntity entity) async => await _todoRepository.insert(entity) ;
 
-  Future<DataState<bool>> update(String title,String description,TodoEntity entity) async => await _todoRepository.update(title, description,entity) ;
+  Future<DataState<bool>> update(TodoEntity entity) async => await _todoRepository.update(entity) ;
 
   Future<DataState<bool>> delete(TodoEntity entity) async => await _todoRepository.delete(entity) ;
 

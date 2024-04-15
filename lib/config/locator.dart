@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/services/storage_service.dart';
+import '../features/category/todo_locator.dart';
 import '../features/todo/todo_locator.dart';
 
 GetIt locator = GetIt.instance;
@@ -21,5 +22,6 @@ setup() async {
   locator.registerSingleton<ApiService>(ApiService(locator()));
 
   TodoLocator(locator) ;
+  CategoryLocator(locator) ;
 
 }
